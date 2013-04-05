@@ -16,12 +16,13 @@ import android.widget.ImageView;
 
 public class Offense extends Activity implements OnTouchListener{
 
-	    private ImageView letterView;                       // The letter that the user drags.
-	    //private ImageView emptyLetterView;              // The letter outline that the user is supposed to drag letterView to.
+	    private ImageView center;                       // The letter that the user drags.
+	    //private ImageView emptycenter;              // The letter outline that the user is supposed to drag center to.
 	    private AbsoluteLayout mainLayout;
-	
-	
-	
+	    private ImageView lineofscrim;
+
+
+
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offense);
@@ -29,10 +30,15 @@ public class Offense extends Activity implements OnTouchListener{
       //  final ImageButton img1 = (ImageButton) findViewById(R.id.imageButton1);
         mainLayout = (AbsoluteLayout) findViewById(R.id.mainLayout);
         mainLayout.setOnTouchListener(this);
-        letterView = (ImageView) findViewById(R.id.letterView);
-        letterView.setOnTouchListener(this);
+        center = (ImageView) findViewById(R.id.center);
+        lineofscrim = (ImageView) findViewById(R.id.lineofscrim);
+        lineofscrim.setFocusable(false);
+        center.setOnTouchListener(this);
+        //center.setOnClickListener(this);
+        center.clearFocus();
+        center.setFocusable(true);
 
-        //emptyLetterView = (ImageView) findViewById(R.id.emptyLetterView);
+        //emptycenter = (ImageView) findViewById(R.id.emptycenter);
       
          
 	}
@@ -46,8 +52,9 @@ public class Offense extends Activity implements OnTouchListener{
 
             int action = event.getAction();
             if (action == MotionEvent.ACTION_DOWN) {
-                if (v == letterView) {
-                	letterView.getHitRect(hitRect);
+                if (v == center) {
+                	center.requestFocusFromTouch();
+                	center.getHitRect(hitRect);
                 	if (hitRect.contains(x, y)){
                 		clicked = true;
                 	}
@@ -59,14 +66,16 @@ public class Offense extends Activity implements OnTouchListener{
             	
             	
                // if (dragging) {
-                    //emptyLetterView.getHitRect(hitRect);
+                    //emptycenter.getHitRect(hitRect);
                    // if (hitRect.contains(x, y))
-                    //    setSameAbsoluteLocation(letterView, mainLayout);
+                    //    setSameAbsoluteLocation(center, mainLayout);
                // }
-            	//if (clicked == true){
-            		letterView.setX(x);
-                	letterView.setY(y);
-            	//}
+            	if (center.hasFocus() == true && y<320 && y>10){
+            		//center.setX(x);
+                	center.setY(y-20);
+                	lineofscrim.setY(y);
+                	//center.clearFocus();
+            	}
             	
             	
             	//Destroy first image replace with 5 seperate circles at that spot
@@ -75,11 +84,14 @@ public class Offense extends Activity implements OnTouchListener{
                 eventConsumed = false;
 
             } else if (action == MotionEvent.ACTION_MOVE) {
-               // if (v == letterView) {
+               // if (v == center) {
                     //if (clicked == true) {
-                        //setAbsoluteLocationCentered(letterView, x, y);
-                        letterView.setX(x);
-                    	letterView.setY(y);
+                        //setAbsoluteLocationCentered(center, x, y);
+            	if (center.hasFocus() == true){
+            		//center.setX(x);
+                	center.setY(y-20);
+                	lineofscrim.setY(y);
+            	}
                    // }
                // }
                 
@@ -91,7 +103,7 @@ public class Offense extends Activity implements OnTouchListener{
     
         
        //img1.setOnClickListener(new View.OnClickListener() {
-			
+
 		/*	@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -128,7 +140,7 @@ public class Offense extends Activity implements OnTouchListener{
                 
                 return true;
             }*/
-			
+
 
 			/*@Override
 			public boolean onDrag(View arg0, DragEvent arg1) {
@@ -173,7 +185,7 @@ public class Offense extends Activity implements OnTouchListener{
         
         
 	}*/
-	
+
 	//@SuppressWarnings({ "deprecation", "unused" })
 	private void setSameAbsoluteLocation(View v1, View v2) {
         AbsoluteLayout.LayoutParams alp2 = (AbsoluteLayout.LayoutParams) v2.getLayoutParams();

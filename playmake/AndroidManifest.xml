@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.playmake.Home"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             
             <intent-filter>
@@ -24,9 +25,16 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.example.playmake.CreatePlay"></activity>
-        <activity android:name="com.example.playmake.Offense"></activity>
-        <activity android:name="com.example.playmake.Defense"></activity>
+        <activity android:name="com.example.playmake.CreatePlay"
+                  android:screenOrientation="portrait">
+            
+        </activity>
+        <activity android:name="com.example.playmake.Offense"
+            	  android:screenOrientation="landscape">
+         	</activity>
+        <activity android:name="com.example.playmake.Defense"
+                  android:screenOrientation="landscape">
+        </activity>
         
         
         
